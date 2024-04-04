@@ -28,7 +28,7 @@ namespace MvcStok.Controllers
                                                Value = i.KATEGORIID.ToString(),
                                            }).ToList();
             ViewBag.dgr = values;
-            return  View();
+            return View();
         }
         [HttpPost]
         public ActionResult YeniUrun(TBLURUNLER p1)
@@ -45,6 +45,33 @@ namespace MvcStok.Controllers
         {
             var values = db.TBLURUNLER.Find(id);
             db.TBLURUNLER.Remove(values);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // URUN GUNCELLEME ISLEMLERI
+        public ActionResult UrunGetir(int id)
+        {
+            var urun = db.TBLURUNLER.Find(id);
+            List<SelectListItem> values = (from i in db.TBLKATEGORILER.ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = i.KATEGORIAD,
+                                               Value = i.KATEGORIID.ToString(),
+                                           }).ToList();
+            ViewBag.dgr = values;
+            return View("UrunGetir", urun);
+        }
+        public ActionResult Guncelle(TBLURUNLER p)
+        {
+            var urun = db.TBLURUNLER.Find(p.URUNID);
+            urun.URUNAD = p.URUNAD;
+            urun.MARKA = p.MARKA;
+            urun.STOK = p.STOK;
+            urun.FIYAT = p.FIYAT;
+            //urun.URUNKATEGORI = p.URUNKATEGORI;
+            var ktg = db.TBLKATEGORILER.Where(m=>m.KATEGORIID == p.TBLKATEGORILER.KATEGORIID).FirstOrDefault();
+            urun.URUNKATEGORI = ktg.KATEGORIID;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

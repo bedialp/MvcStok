@@ -1,9 +1,9 @@
-﻿
-@model List<MvcStok.Models.Entity.TBLKATEGORILER>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<MvcStok.Models.Entity.TBLKATEGORILER>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
-    int count = 0;
 }
 
 <table class="table table-bordered">
@@ -16,9 +16,8 @@
     <tbody>
         @foreach (var ktgr in Model)
         {
-            count++;
-            <tr> 
-                <th>@count</th>
+            <tr>
+                <th>@ktgr.KATEGORIID</th>
                 <td>@ktgr.KATEGORIAD</td>
                 <td><a href="/KATEGORI/SIL/@ktgr.KATEGORIID" class="btn btn-danger">Sil</a></td>
                 <td><a href="/KATEGORI/KategoriGetir/@ktgr.KATEGORIID " class="btn btn-success">Guncelle</a></td>
@@ -26,5 +25,7 @@
         }
     </tbody>
 </table>
+
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))
 
 <a href="/KATEGORI/YeniKategori" class="btn btn-primary">Yeni Kategori Ekle</a>

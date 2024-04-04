@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MvcStok.Models.Entity;    
+using MvcStok.Models.Entity;
+using PagedList;
+using PagedList.Mvc;
 
 namespace MvcStok.Controllers
 {
@@ -11,9 +13,10 @@ namespace MvcStok.Controllers
     {
         MvcDbStokEntities db = new MvcDbStokEntities();
         // GET: Kategori
-        public ActionResult Index()
+        public ActionResult Index(int sayfa = 1)
         {
-            var values = db.TBLKATEGORILER.ToList();
+            // var values = db.TBLKATEGORILER.ToList();
+            var values = db.TBLKATEGORILER.ToList().ToPagedList(sayfa, 4);
             return View(values);
         }
 
@@ -26,6 +29,10 @@ namespace MvcStok.Controllers
         [HttpPost]
         public ActionResult YeniKategori(TBLKATEGORILER p1)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("YeniKategori");
+            }
             db.TBLKATEGORILER.Add(p1);
             db.SaveChanges();
             return RedirectToAction("Index");
