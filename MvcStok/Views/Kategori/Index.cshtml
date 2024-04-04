@@ -1,0 +1,30 @@
+﻿
+@model List<MvcStok.Models.Entity.TBLKATEGORILER>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    int count = 0;
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>KATEGORILER</th>
+        <th>KATEGORI ADI</th>
+        <th>SIL</th>
+        <th>GUNCELLE</th>
+    </tr>
+    <tbody>
+        @foreach (var ktgr in Model)
+        {
+            count++;
+            <tr> 
+                <th>@count</th>
+                <td>@ktgr.KATEGORIAD</td>
+                <td><a href="/KATEGORI/SIL/@ktgr.KATEGORIID" class="btn btn-danger">Sil</a></td>
+                <td><a href="/KATEGORI/KategoriGetir/@ktgr.KATEGORIID " class="btn btn-success">Guncelle</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/KATEGORI/YeniKategori" class="btn btn-primary">Yeni Kategori Ekle</a>
