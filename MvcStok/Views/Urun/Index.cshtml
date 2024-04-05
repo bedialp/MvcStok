@@ -3,17 +3,19 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
-<table class="table table-bordered">
-    <tr>
-        <th>URUN ID</th>
-        <th>URUN ADI</th>
-        <th>MARKASI</th>
-        <th>KATEGORI</th>
-        <th>FIYAT</th>
-        <th>STOK</th>
-        <th>SIL</th>
-        <th>GUNCELLE</th>
-    </tr>
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>URUN ID</th>
+            <th>URUN ADI</th>
+            <th>MARKASI</th>
+            <th>KATEGORI</th>
+            <th>FIYAT</th>
+            <th>STOK</th>
+            <th>SIL</th>
+            <th>GUNCELLE</th>
+        </tr>
+    </thead>
     <tbody>
         @foreach (var urn in Model)
         {
@@ -31,3 +33,13 @@
     </tbody>
 </table>
 <a href="/URUN/YeniUrun" class="btn btn-primary">Yeni Urun Ekle</a>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+<link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<script>
+    $('#tbl1').DataTable();
+</script>
