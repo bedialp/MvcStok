@@ -3,6 +3,15 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
+
+@using (Html.BeginForm("Index", "Musteri", FormMethod.Get))
+{
+    <p>
+        <b>Aranacak Musteri Adi:</b> @Html.TextBox("p")
+        <input type="submit" value="Ara" />
+    </p>
+}
+
 <table class="table table-bordered">
     <tr>
         <th>MUSTERI ID</th>
@@ -10,6 +19,7 @@
         <th>MUSTERI SOYADI</th>
         <th>SIL</th>
         <th>GUNCELLE</th>
+        <th>ALERT</th>
     </tr>
     <tbody>
         @foreach (var mstr in Model)
@@ -20,6 +30,8 @@
                 <td>@mstr.MUSTERISOYAD</td>
                 <td><a href="/MUSTERI/SIL/@mstr.MUSTERIID" class="btn btn-danger">Sil</a></td>
                 <td><a href="/MUSTERI/MusteriGetir/@mstr.MUSTERIID " class="btn btn-success">Guncelle</a></td>
+                @*'SIL BUTONU' Alert and Confirm Usage format*@
+                <td>@Html.ActionLink("SIL BUTONU", "SIL", new { id = mstr.MUSTERIID }, new { @class = "btn btn-warning", onclick = "return confirm('Gercekten Silmek Istiyor Musunuz?')" })</td>
             </tr>
         }
     </tbody>
